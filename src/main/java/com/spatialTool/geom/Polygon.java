@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 多边行
  */
-public class Polygon {
+public class Polygon{
 
 	private List<Point> points;  //多边形的顶点
 	
@@ -18,15 +18,15 @@ public class Polygon {
 			return geometry;
 		else{
 			if(points!=null&&points.size()>2){
-				double minX=points.get(0).getX();
-				double minY=points.get(0).getY();
-				double maxX=points.get(0).getX();
-				double maxY=points.get(0).getY();
+				double minX=points.get(0).x();
+				double minY=points.get(0).y();
+				double maxX=points.get(0).x();
+				double maxY=points.get(0).y();
 				for(int i=1;i<points.size();i++){
-					minX = min(minX,points.get(i).getX());
-					minY = min(minY,points.get(i).getY());
-					maxX = max(maxX,points.get(i).getX());
-					maxY = max(maxY,points.get(i).getY());
+					minX = min(minX,points.get(i).x());
+					minY = min(minY,points.get(i).y());
+					maxX = max(maxX,points.get(i).x());
+					maxY = max(maxY,points.get(i).y());
 				}
 				return Rectangle.create(minX, minY, maxX, maxY);
 			}
@@ -47,19 +47,19 @@ public class Polygon {
 	 * @return
 	 */
 	public boolean searchPoint(Point point) {
-		double x = point.getX();
-		double y = point.getY();
+		double x = point.x();
+		double y = point.y();
 		int npoints = points.size();
 		int hits = 0;
 
-		double lastx = points.get(npoints - 1).getX();
-		double lasty = points.get(npoints - 1).getY();
+		double lastx = points.get(npoints - 1).x();
+		double lasty = points.get(npoints - 1).y();
 		double curx, cury;
 
 		// Walk the edges of the polygon
 		for (int i = 0; i < npoints; lastx = curx, lasty = cury, i++) {
-			curx = points.get(i).getX();
-			cury = points.get(i).getY();
+			curx = points.get(i).x();
+			cury = points.get(i).y();
 
 			if (cury == lasty) {
 				continue;
@@ -143,21 +143,21 @@ public class Polygon {
 	 */
 	public boolean polygonsIntersect(Polygon p) {
 		// 如果一个范围包含另一个范围，则返回true;
-		double x = p.points.get(p.points.size() - 1).getX();
-		double y = p.points.get(p.points.size() - 1).getY();
-		if (searchPoint(new Point(x, y)))
+		double x = p.points.get(p.points.size() - 1).x();
+		double y = p.points.get(p.points.size() - 1).y();
+		if (searchPoint(Point.create(x, y)))
 			return true;
-		x = this.points.get(this.points.size() - 1).getX();
-		y = this.points.get(this.points.size() - 1).getY();
-		if (p.searchPoint(new Point(x, y)))
+		x = this.points.get(this.points.size() - 1).x();
+		y = this.points.get(this.points.size() - 1).y();
+		if (p.searchPoint(Point.create(x, y)))
 			return true;
 		for (int i = 0; i < p.points.size() - 1; i++) {
 			for (int j = 0; j < this.points.size() - 1; j++) {
-				if (linesIntersect(p.points.get(i).getX(), p.points.get(i)
-						.getY(), p.points.get(i + 1).getX(), p.points
-						.get(i + 1).getY(), this.points.get(j).getX(),
-						this.points.get(j).getY(), this.points.get(j + 1)
-								.getX(), this.points.get(j + 1).getY()))
+				if (linesIntersect(p.points.get(i).x(), p.points.get(i)
+						.y(), p.points.get(i + 1).x(), p.points
+						.get(i + 1).y(), this.points.get(j).x(),
+						this.points.get(j).y(), this.points.get(j + 1)
+								.x(), this.points.get(j + 1).y()))
 					return true;
 			}
 		}
@@ -180,7 +180,7 @@ public class Polygon {
 		String[] array = str.split(",");
 		List<Point> corner = new ArrayList<Point>();
 		for (int i = 0; i < array.length; i += 2) {
-			Point c = new Point(Double.parseDouble(array[i]),
+			Point c = Point.create(Double.parseDouble(array[i]),
 					Double.parseDouble(array[i + 1]));
 			corner.add(c);
 			c = null;

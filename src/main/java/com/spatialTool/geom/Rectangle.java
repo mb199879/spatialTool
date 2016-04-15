@@ -1,6 +1,6 @@
 package com.spatialTool.geom;
 
-public final class Rectangle{
+public final class Rectangle implements Geometry{
     private final double x1, y1, x2, y2;
 
     private Rectangle(double x1, double y1, double x2, double y2) {
@@ -48,6 +48,7 @@ public final class Rectangle{
         return r.x2 >= x1 && r.x1 <= x2 && r.y2 >= y1 && r.y1 <= y2;
     }
 
+    //两个矩形的距离
     public double distance(Rectangle r) {
         if (intersects(r))
             return 0;

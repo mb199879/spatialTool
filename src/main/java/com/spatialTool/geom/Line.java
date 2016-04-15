@@ -3,7 +3,7 @@ package com.spatialTool.geom;
 /**
  *   参考java.awt.geom.Line2D类
  */
-public class Line {
+public  class Line  {
 
 	public double x1;
 
@@ -33,7 +33,7 @@ public class Line {
 	}
 
 	public Point getP1() {
-		return new Point(x1, y1);
+		return Point.create(x1, y1);
 	}
 
 	public double getX2() {
@@ -45,7 +45,7 @@ public class Line {
 	}
 
 	public Point getP2() {
-		return new Point(x2, y2);
+		return Point.create(x2, y2);
 	}
 
 	public void setLine(double x1, double y1, double x2, double y2) {
@@ -56,7 +56,7 @@ public class Line {
 	}
 
 	public void setLine(Point p1, Point p2) {
-		setLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+		setLine(p1.x(), p1.y(), p2.x(), p2.y());
 	}
 	/**
 	 * @param x1,y1  线段的一个点
@@ -148,4 +148,5 @@ public class Line {
 	public double ptSegDistSq(double px, double py){
 		return ptSegDistSq(getX1(),getY1(),getX2(),getY1(),px,py);
 	}
+
 }
