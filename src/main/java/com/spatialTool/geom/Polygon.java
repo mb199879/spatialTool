@@ -9,14 +9,38 @@ import java.util.List;
 public class Polygon {
 
 	private List<Point> points;  //多边形的顶点
-
+	
+	private Rectangle geometry;   //多边形的外接矩形
+	
+	//计算多边形的外接矩形
+	public Rectangle getGeometry() {
+		if(geometry!=null)
+			return geometry;
+		else{
+			if(points!=null&&points.size()>2){
+				double minX=points.get(0).getX();
+				double minY=points.get(0).getY();
+				double maxX=points.get(0).getX();
+				double maxY=points.get(0).getY();
+				for(int i=1;i<points.size();i++){
+					minX = min(minX,points.get(i).getX());
+					minY = min(minY,points.get(i).getY());
+					maxX = max(maxX,points.get(i).getX());
+					maxY = max(maxY,points.get(i).getY());
+				}
+				return Rectangle.create(minX, minY, maxX, maxY);
+			}
+			return null;
+		}
+	}
+	
 	public List<Point> getCorner() {
 		return points;
 	}
-
 	public void setCorner(List<Point> points) {
 		this.points = points;
 	}
+	
 	/**
 	 * 点跟多边形的关系。多边形包含点则返回true
 	 * @param point
@@ -147,6 +171,8 @@ public class Polygon {
 		Polygon p2 = convertToPoly(str2);
 		boolean result = p1.polygonsIntersect(p2);
 		System.out.println("是否相交：" + result);
+		Rectangle r = p1.getGeometry();
+		System.out.println(r);
 	}
 
 	public static Polygon convertToPoly(String str) {
@@ -162,4 +188,17 @@ public class Polygon {
 		p.setCorner(corner);
 		return p;
 	}
+	
+	private double max(double a, double b) {
+        if (a < b)
+            return b;
+        else
+            return a;
+    }
+    private double min(double a, double b) {
+        if (a < b)
+            return a;
+        else
+            return b;
+    }
 }

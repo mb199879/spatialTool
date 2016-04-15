@@ -31,4 +31,13 @@ public class Point {
 		return "Point[" + x + ", " + y + "]";
 	}
 	
+	public boolean equals(Object o){
+		if (this == o) {
+            return true;
+        }
+		if (o instanceof Point){
+			return ((Point) o).getX()==this.getX()&&((Point) o).getY()==this.getY();
+		}
+		return false;
+	}
 }
